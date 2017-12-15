@@ -3,6 +3,8 @@
 # ah there it is, univers let syou run s many environmetns as you want in parallel
 import gym
 import universe
+# random is essential for randomly generating movements that will be sifted through for optimal score/distance
+import random
 
 # using neon racers as the test environment; this just configures the env based on gym syntax
 env = gym.make('flashgames.NeonRace-v0')
@@ -13,6 +15,14 @@ env.configure(remotes=1) # creates a local docker container
 # env.reset() generates an observation that is specific to the environment (number of pixels,
 # score, etc.) - this initiates theenvironment and gets a list of the observatiosn of its initial state
 observation_n = env.reset()
+
+# creating variables which the ai uses to control the vehicle; if a key was previously pressed, needs to set it false
+# so that if can be changed and does not conflict with the left/right movement
+goLeft = [('KeyEvent', 'ArrowUp', True), ('KeyEvent', 'ArrowLeft', True), ('KeyEvent', 'ArrowRight', False)]
+goLeft = [('KeyEvent', 'ArrowUp', True), ('KeyEvent', 'ArrowLeft', False), ('KeyEvent', 'ArrowRight', True)]
+
+# with nitro
+goLeft = [('KeyEvent', 'ArrowUp', True), ('KeyEvent', 'ArrowLeft', False), ('KeyEvent', 'ArrowRight', False), ('KeyEvent', 'n', True)]
 
 # just an infinite loop where up arrow is pressed for all observations
 while True:
